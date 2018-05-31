@@ -21,7 +21,7 @@ void Game::Start(void)
 	if (_gameState != Uninitialized)
 		return;
 
-	_mainWindow.create(sf::VideoMode(1024, 768, 32), "Les 1001 Muses");
+	_mainWindow.create(sf::VideoMode(562, 700, 32), "Les 1001 Muses");
 	_gameState = Game::ShowingSplash;
 
 	while (!IsExiting())
@@ -90,9 +90,13 @@ void Game::ShowMenu()
 	case MainMenu::Exit:
 		_gameState = Game::Exiting;
 		break;
-	case MainMenu::Play:
+	case MainMenu::PlaySolo:
+		_gameState = Game::Playing;
+		break;
+	case MainMenu::PlayMulti:
 		_gameState = Game::Playing;
 		break;
 	}
 }
+
 

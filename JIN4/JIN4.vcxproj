@@ -177,6 +177,8 @@
     <Image Include="images\Mainmenu.png" />
     <Image Include="images\Nine_Muses.png" />
     <Image Include="images\Splashscreen.png" />
+    <Image Include="images\the_muses-menu.png" />
+    <Image Include="images\the_muses.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

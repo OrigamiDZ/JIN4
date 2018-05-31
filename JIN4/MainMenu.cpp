@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "MainMenu.h"
+#include <iostream>
+
 
 
 MainMenu::MainMenu()
@@ -16,28 +18,37 @@ MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
 
 	//Load menu image from file
 	sf::Texture texture;
-	texture.loadFromFile("c:/Dev/JIN4/JIN4/images/Mainmenu.png");
+	texture.loadFromFile("c:/Dev/JIN4/JIN4/images/the_muses-menu.png");
 	sf::Sprite sprite(texture);
 
 	//Setup clickable regions
 
-	//Play menu item coordinates
-	MenuItem playButton;
-	playButton.rect.top = 145;
-	playButton.rect.height = 235;
-	playButton.rect.left = 0;
-	playButton.rect.width = 1023;
-	playButton.action = Play;
+	//PlaySolo menu item coordinates
+	MenuItem playSoloButton;
+	playSoloButton.rect.left = 190;
+	playSoloButton.rect.top = 167;
+	playSoloButton.rect.width = 178;
+	playSoloButton.rect.height = 56;
+	playSoloButton.action = PlaySolo;
+
+	//PlayMulti menu item coordinates
+	MenuItem playMultiButton;
+	playMultiButton.rect.left = 80;
+	playMultiButton.rect.top = 345;
+	playMultiButton.rect.width = 404;
+	playMultiButton.rect.height = 51;
+	playMultiButton.action = PlayMulti;
 
 	//Exit menu item coordinates
 	MenuItem exitButton;
-	exitButton.rect.left = 0;
-	exitButton.rect.width = 1023;
-	exitButton.rect.top = 383;
-	exitButton.rect.height = 177;
+	exitButton.rect.left = 162;
+	exitButton.rect.top = 520;
+	exitButton.rect.width = 231;
+	exitButton.rect.height = 51;
 	exitButton.action = Exit;
 
-	_menuItems.push_back(playButton);
+	_menuItems.push_back(playSoloButton);
+	_menuItems.push_back(playMultiButton);
 	_menuItems.push_back(exitButton);
 
 	window.draw(sprite);
@@ -53,10 +64,13 @@ MainMenu::MenuResult MainMenu::HandleClick(int x, int y)
 	for (it = _menuItems.begin(); it != _menuItems.end(); it++)
 	{
 		sf::Rect<int> menuItemRect = (*it).rect;
-		if (menuItemRect.height > y
-			&& menuItemRect.top < y
-			&& menuItemRect.left < x
-			&& menuItemRect.width > x)
+
+		int gauche = menuItemRect.left;
+		int droite = menuItemRect.left + menuItemRect.width;
+		int haut = menuItemRect.top;
+		int bas = menuItemRect.height + menuItemRect.top;
+
+		if (!(bas < y) && !(haut > y) && !(droite < x) && !(gauche > x))
 		{
 			return (*it).action;
 		}

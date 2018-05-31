@@ -82,5 +82,11 @@
     <Image Include="images\Splashscreen.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="images\the_muses.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\the_muses-menu.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -9,7 +9,7 @@ class MainMenu
 public:
 	MainMenu();
 	~MainMenu();
-	enum MenuResult { Nothing, Exit, Play };
+	enum MenuResult { Nothing, Exit, PlaySolo, PlayMulti };
 
 	struct MenuItem
 	{

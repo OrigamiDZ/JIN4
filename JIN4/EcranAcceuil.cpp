@@ -14,7 +14,7 @@ EcranAcceuil::~EcranAcceuil()
 void EcranAcceuil::Show(sf::RenderWindow & renderWindow)
 {
 	sf::Texture texture;
-	if (texture.loadFromFile("c:/Dev/JIN4/JIN4/images/Splashscreen.png") != true)
+	if (texture.loadFromFile("c:/Dev/JIN4/JIN4/images/the_muses.png") != true)
 	{
 		return;
 	}
