@@ -42,6 +42,9 @@
     <ClInclude Include="MainMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SecondMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -71,6 +74,9 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SecondMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="images\Mainmenu.png">
@@ -86,6 +92,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="images\the_muses-menu.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\the_muses-menu-second.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

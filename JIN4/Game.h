@@ -17,11 +17,16 @@ private:
 
 	static void ShowSplashScreen();
 	static void ShowMenu();
+	static void ShowSecondMenu();
+
 
 	enum GameState {
-		Uninitialized, ShowingSplash, Paused,
-		ShowingMenu, Playing, Exiting
+		Uninitialized, ShowingSplash, Paused, ShowingSecondMenu,
+		PlayingSolo, PlayingMulti,
+		ShowingMenu,  Exiting
 	};
+
+
 
 	static GameState _gameState;
 	static sf::RenderWindow _mainWindow;

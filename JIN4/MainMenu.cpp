@@ -2,8 +2,6 @@
 #include "MainMenu.h"
 #include <iostream>
 
-
-
 MainMenu::MainMenu()
 {
 }
@@ -70,7 +68,7 @@ MainMenu::MenuResult MainMenu::HandleClick(int x, int y)
 		int haut = menuItemRect.top;
 		int bas = menuItemRect.height + menuItemRect.top;
 
-		if (!(bas < y) && !(haut > y) && !(droite < x) && !(gauche > x))
+		if (bas > y && haut < y && droite > x && gauche < x)
 		{
 			return (*it).action;
 		}

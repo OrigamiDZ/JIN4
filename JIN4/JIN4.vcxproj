@@ -153,6 +153,7 @@
     <ClInclude Include="Points.h" />
     <ClInclude Include="Questions.h" />
     <ClInclude Include="Reponses.h" />
+    <ClInclude Include="SecondMenu.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Timer.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Points.cpp" />
     <ClCompile Include="Questions.cpp" />
     <ClCompile Include="Reponses.cpp" />
+    <ClCompile Include="SecondMenu.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -177,6 +179,7 @@
     <Image Include="images\Mainmenu.png" />
     <Image Include="images\Nine_Muses.png" />
     <Image Include="images\Splashscreen.png" />
+    <Image Include="images\the_muses-menu-second.png" />
     <Image Include="images\the_muses-menu.png" />
     <Image Include="images\the_muses.png" />
   </ItemGroup>

@@ -2,8 +2,11 @@
 #include "Game.h"
 #include "EcranAcceuil.h"
 #include "MainMenu.h"
+#include "SecondMenu.h"
 
 
+SecondMenu::SecondMenuResult subject;
+bool solo;
 
 Game::GameState Game::_gameState = Uninitialized;
 sf::RenderWindow Game::_mainWindow;
@@ -54,12 +57,33 @@ void Game::GameLoop()
 		ShowSplashScreen();
 		break;
 	}
-	case Game::Playing:
+	case Game::ShowingSecondMenu:
+	{
+		ShowSecondMenu();
+	}
+	case Game::PlayingSolo:
 	{
 		sf::Event currentEvent;
 		while (_mainWindow.pollEvent(currentEvent))
 		{
 			_mainWindow.clear(sf::Color(0, 0, 0));
+			_mainWindow.display();
+
+			if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
+
+			if (currentEvent.type == sf::Event::KeyPressed)
+			{
+				if (currentEvent.key.code == sf::Keyboard::Escape) ShowMenu();
+			}
+		}
+		break;
+	}
+	case Game::PlayingMulti:
+	{
+		sf::Event currentEvent;
+		while (_mainWindow.pollEvent(currentEvent))
+		{
+			_mainWindow.clear(sf::Color(255, 255, 255));
 			_mainWindow.display();
 
 			if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
@@ -91,10 +115,72 @@ void Game::ShowMenu()
 		_gameState = Game::Exiting;
 		break;
 	case MainMenu::PlaySolo:
-		_gameState = Game::Playing;
+		_gameState = Game::ShowingSecondMenu;
+		solo = true;
 		break;
 	case MainMenu::PlayMulti:
-		_gameState = Game::Playing;
+		_gameState = Game::ShowingSecondMenu;
+		solo = false;
+		break;
+	}
+}
+
+void Game::ShowSecondMenu()
+{
+	SecondMenu secondMenu;
+	SecondMenu::SecondMenuResult result = secondMenu.Show(_mainWindow);
+	switch (result)
+	{
+	case SecondMenu::Exit:
+		_gameState = Game::Exiting;
+		break;
+	case SecondMenu::Back:
+		_gameState = Game::ShowingMenu;
+		break;
+	case SecondMenu::Histoire:
+		subject = SecondMenu::Histoire;
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		break;
+	case SecondMenu::Comedie:
+		subject = SecondMenu::Comedie;
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		break;
+	case SecondMenu::Litterature:
+		subject = SecondMenu::Litterature;
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		break;
+	case SecondMenu::Chant:
+		subject = SecondMenu::Chant;
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		break;
+	case SecondMenu::Musique:
+		subject = SecondMenu::Musique;
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		break;
+	case SecondMenu::Tragedie:
+		subject = SecondMenu::Tragedie;
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		break;
+	case SecondMenu::Astrologie:
+		subject = SecondMenu::Astrologie;
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		break;
+	case SecondMenu::Rhetorique:
+		subject = SecondMenu::Rhetorique;
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		break;
+	case SecondMenu::Danse:
+		subject = SecondMenu::Danse;
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) { _gameState = Game::PlayingMulti; }
 		break;
 	}
 }
