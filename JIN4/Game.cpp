@@ -3,9 +3,9 @@
 #include "EcranAcceuil.h"
 #include "MainMenu.h"
 #include "SecondMenu.h"
+#include "QuestionMenu.h"
 
-
-SecondMenu::SecondMenuResult subject;
+std::string subject;
 bool solo;
 
 Game::GameState Game::_gameState = Uninitialized;
@@ -63,20 +63,7 @@ void Game::GameLoop()
 	}
 	case Game::PlayingSolo:
 	{
-		sf::Event currentEvent;
-		while (_mainWindow.pollEvent(currentEvent))
-		{
-			_mainWindow.clear(sf::Color(0, 0, 0));
-			_mainWindow.display();
-
-			if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
-
-			if (currentEvent.type == sf::Event::KeyPressed)
-			{
-				if (currentEvent.key.code == sf::Keyboard::Escape) ShowMenu();
-			}
-		}
-		break;
+		ShowQuestionMenu();
 	}
 	case Game::PlayingMulti:
 	{
@@ -138,50 +125,64 @@ void Game::ShowSecondMenu()
 		_gameState = Game::ShowingMenu;
 		break;
 	case SecondMenu::Histoire:
-		subject = SecondMenu::Histoire;
+		subject = "histoire";
 		if (solo) { _gameState = Game::PlayingSolo; }
 		else if (!(solo)) { _gameState = Game::PlayingMulti; }
 		break;
 	case SecondMenu::Comedie:
-		subject = SecondMenu::Comedie;
+		subject = "comedie";
 		if (solo) { _gameState = Game::PlayingSolo; }
 		else if (!(solo)) { _gameState = Game::PlayingMulti; }
 		break;
 	case SecondMenu::Litterature:
-		subject = SecondMenu::Litterature;
+		subject = "litterature";
 		if (solo) { _gameState = Game::PlayingSolo; }
 		else if (!(solo)) { _gameState = Game::PlayingMulti; }
 		break;
 	case SecondMenu::Chant:
-		subject = SecondMenu::Chant;
+		subject = "chant";
 		if (solo) { _gameState = Game::PlayingSolo; }
 		else if (!(solo)) { _gameState = Game::PlayingMulti; }
 		break;
 	case SecondMenu::Musique:
-		subject = SecondMenu::Musique;
+		subject = "musique";
 		if (solo) { _gameState = Game::PlayingSolo; }
 		else if (!(solo)) { _gameState = Game::PlayingMulti; }
 		break;
 	case SecondMenu::Tragedie:
-		subject = SecondMenu::Tragedie;
+		subject = "tragedie";
 		if (solo) { _gameState = Game::PlayingSolo; }
 		else if (!(solo)) { _gameState = Game::PlayingMulti; }
 		break;
 	case SecondMenu::Astrologie:
-		subject = SecondMenu::Astrologie;
+		subject = "astrologie";
 		if (solo) { _gameState = Game::PlayingSolo; }
 		else if (!(solo)) { _gameState = Game::PlayingMulti; }
 		break;
 	case SecondMenu::Rhetorique:
-		subject = SecondMenu::Rhetorique;
+		subject = "rhetorique";
 		if (solo) { _gameState = Game::PlayingSolo; }
 		else if (!(solo)) { _gameState = Game::PlayingMulti; }
 		break;
 	case SecondMenu::Danse:
-		subject = SecondMenu::Danse;
+		subject = "danse";
 		if (solo) { _gameState = Game::PlayingSolo; }
 		else if (!(solo)) { _gameState = Game::PlayingMulti; }
 		break;
+	}
+}
+
+void Game::ShowQuestionMenu()
+{
+	QuestionMenu questionMenu;
+	QuestionMenu::QuestionMenuResult result = questionMenu.Show(_mainWindow, subject);
+	switch (result)
+	{
+	case QuestionMenu::Exit:
+		_gameState = Game::ShowingSecondMenu;
+		break;
+
+
 	}
 }
 

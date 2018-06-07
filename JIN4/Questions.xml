@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+  <litterature>
+    
+  </litterature>
+  <histoire>
+    
+  </histoire>
+  <chant>
+    
+  </chant>
+  <musique>
+    
+  </musique>
+  <tragedie>
+    <question id ="1" enonce ="Comment se nomme la belle-mere d'Hippolyte, fils de Thesee ?">
+      <reponse valeur="Héra" bool="false" />
+      <reponse valeur="Phèdre" bool="true" />
+      <reponse valeur="Andromaque" bool="false" />
+    </question>
+      <question id ="2" enonce ="Qui Antigone souhaite-t-elle donner des rites funéraires en dépit de l'interdiction officielle de son oncle Créon ?">
+      <reponse valeur="Polynice" bool="true" />
+      <reponse valeur="Eteocle" bool="false" />
+      <reponse valeur="Tiresias" bool="false" />
+    </question>
+  </tragedie>
+  <comedie>
+    
+  </comedie>
+  <danse>
+    
+  </danse>
+  <rhetorique>
+    
+  </rhetorique>
+  <astrologie>
+    
+  </astrologie>
+    
+</document>

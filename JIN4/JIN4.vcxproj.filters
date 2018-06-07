@@ -45,6 +45,9 @@
     <ClInclude Include="SecondMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QuestionMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -77,6 +80,9 @@
     <ClCompile Include="SecondMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QuestionMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="images\Mainmenu.png">
@@ -97,5 +103,15 @@
     <Image Include="images\the_muses-menu-second.png">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Questions.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="font\DAYROM__.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
   </ItemGroup>
 </Project>

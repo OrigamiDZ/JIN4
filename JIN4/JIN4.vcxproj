@@ -151,6 +151,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Points.h" />
+    <ClInclude Include="QuestionMenu.h" />
     <ClInclude Include="Questions.h" />
     <ClInclude Include="Reponses.h" />
     <ClInclude Include="SecondMenu.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="JIN4.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Points.cpp" />
+    <ClCompile Include="QuestionMenu.cpp" />
     <ClCompile Include="Questions.cpp" />
     <ClCompile Include="Reponses.cpp" />
     <ClCompile Include="SecondMenu.cpp" />
@@ -182,6 +184,14 @@
     <Image Include="images\the_muses-menu-second.png" />
     <Image Include="images\the_muses-menu.png" />
     <Image Include="images\the_muses.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Questions.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="font\DAYROM__.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

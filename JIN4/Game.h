@@ -2,7 +2,6 @@
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 
-
 class Game
 {
 
@@ -11,6 +10,8 @@ public:
 	Game();
 	~Game();
 
+	std::vector<std::string> data;
+
 private:
 	static bool IsExiting();
 	static void GameLoop();
@@ -18,6 +19,7 @@ private:
 	static void ShowSplashScreen();
 	static void ShowMenu();
 	static void ShowSecondMenu();
+	static void ShowQuestionMenu();
 
 
 	enum GameState {
@@ -26,8 +28,7 @@ private:
 		ShowingMenu,  Exiting
 	};
 
-
-
 	static GameState _gameState;
 	static sf::RenderWindow _mainWindow;
+
 };
