@@ -37,11 +37,9 @@ std::vector<pugi::xml_node> QuestionMenu::GoFetch(const std::string categorieStr
 			std::string attrName = attr.name();
 			std::string attrValue = attr.value();
 
-			std::cout << attrName << std::endl;
-			std::cout << attrValue << std::endl;
-
 			for (auto i : choix) {
-				if (attrName.compare("id") && attrValue.compare(i))
+
+				if (attrName == "id" && attrValue == i)
 				{
 					result.push_back(question);
 				}
