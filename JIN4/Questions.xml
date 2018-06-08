@@ -18,7 +18,7 @@
       <reponse valeur="Phèdre" bool="true" />
       <reponse valeur="Andromaque" bool="false" />
     </question>
-      <question id ="2" enonce ="Qui Antigone souhaite-t-elle donner des rites funéraires en dépit de l'interdiction officielle de son oncle Créon ?">
+      <question id ="2" enonce ="Qui Antigone souhaite-t-elle donner des rites funeraires en depit de l'interdiction officielle de son oncle Creon ?">
       <reponse valeur="Polynice" bool="true" />
       <reponse valeur="Eteocle" bool="false" />
       <reponse valeur="Tiresias" bool="false" />

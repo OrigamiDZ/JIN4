@@ -7,9 +7,8 @@ TEST(TestCaseName, TestGoFetch) {
 
 	//choix aléatoire des questions
 	std::vector<std::string> choix;
-	for (int i = 1; i < 3; i++) {
-		choix.push_back(std::to_string(i));
-	}
+	choix.push_back("1");
+	choix.push_back("2");
 
 	//chargement du fichier
 	pugi::xml_document doc;
@@ -49,10 +48,10 @@ TEST(TestCaseName, TestGoFetch) {
 	ASSERT_STREQ(question1attr1.value(), "1");
 	ASSERT_STREQ(question1attr2.value(), "Comment se nomme la belle-mere d'Hippolyte, fils de Thesee ?");
 	
-	pugi::xml_node question2 = result[1];
+	pugi::xml_node question2 = result[2];
 	pugi::xml_attribute question2attr1 = question2.first_attribute();
 	pugi::xml_attribute question2attr2 = question2attr1.next_attribute();
 	ASSERT_STREQ(question2attr1.value(), "2");
-	ASSERT_STREQ(question2attr2.value(), "Qui Antigone souhaite-t-elle donner des rites funéraires en dépit de l'interdiction officielle de son oncle Créon ?");
+	ASSERT_STREQ(question2attr2.value(), "Qui Antigone souhaite-t-elle donner des rites funeraires en depit de l'interdiction officielle de son oncle Creon ?");
 	
 }

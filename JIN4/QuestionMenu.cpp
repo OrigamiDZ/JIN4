@@ -36,6 +36,10 @@ std::vector<pugi::xml_node> QuestionMenu::GoFetch(const std::string categorieStr
 		{
 			std::string attrName = attr.name();
 			std::string attrValue = attr.value();
+
+			std::cout << attrName << std::endl;
+			std::cout << attrValue << std::endl;
+
 			for (auto i : choix) {
 				if (attrName.compare("id") && attrValue.compare(i))
 				{
@@ -50,9 +54,10 @@ std::vector<pugi::xml_node> QuestionMenu::GoFetch(const std::string categorieStr
 
 sf::Text QuestionMenu::QuestionShow(std::vector<pugi::xml_node> node, const int numeroQuestion) {
 	std::string question;
+	pugi::xml_node questionNode = node[numeroQuestion];
 
 	//récupération de la question
-	for (pugi::xml_attribute attr = node[numeroQuestion].first_attribute(); attr; attr = attr.next_attribute())
+	for (pugi::xml_attribute attr = questionNode.first_attribute(); attr; attr = attr.next_attribute())
 	{
 		std::string attrName = attr.name();
 		std::string attrValue = attr.value();
