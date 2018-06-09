@@ -21,7 +21,6 @@ private:
 	static void ShowSecondMenu();
 	static void ShowQuestionMenu();
 
-
 	enum GameState {
 		Uninitialized, ShowingSplash, Paused, ShowingSecondMenu,
 		PlayingSolo, PlayingMulti,

@@ -24,16 +24,7 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Questions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Reponses.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Points.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EcranAcceuil.h">
@@ -48,6 +39,9 @@
     <ClInclude Include="QuestionMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FinMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -59,16 +53,7 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Questions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Reponses.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Points.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EcranAcceuil.cpp">
@@ -81,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QuestionMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FinMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -106,6 +94,9 @@
     <Image Include="images\the_muses-menu-question.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="images\the_muses-menu-fin.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Questions.xml">
@@ -114,6 +105,9 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="font\DAYROM__.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+    <Font Include="font\DIOGENES.ttf">
       <Filter>Resource Files</Filter>
     </Font>
   </ItemGroup>

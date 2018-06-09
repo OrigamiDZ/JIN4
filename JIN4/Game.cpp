@@ -4,6 +4,8 @@
 #include "MainMenu.h"
 #include "SecondMenu.h"
 #include "QuestionMenu.h"
+#include "FinMenu.h"
+
 
 std::string subject;
 bool solo;
@@ -83,6 +85,7 @@ void Game::GameLoop()
 		break;
 	}
 	}
+
 }
 
 void Game::ShowSplashScreen()
@@ -175,15 +178,24 @@ void Game::ShowSecondMenu()
 void Game::ShowQuestionMenu()
 {
 	QuestionMenu questionMenu;
-	QuestionMenu::QuestionMenuResult result = questionMenu.Show(_mainWindow, subject);
+	int score = questionMenu.Show(_mainWindow, subject);
+	FinMenu finMenu;
+	FinMenu::FinMenuResult result = finMenu.Show(_mainWindow, score);
 	switch (result)
 	{
-	case QuestionMenu::Exit:
+	case FinMenu::Autre:
 		_gameState = Game::ShowingSecondMenu;
+		break;
+	case FinMenu::Recommencer:
+		ShowQuestionMenu();
+		break;
+	case FinMenu::Exit:
+		_gameState = Game::Exiting;
 		break;
 
 
 	}
 }
+
 
 

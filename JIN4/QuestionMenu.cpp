@@ -11,6 +11,26 @@ QuestionMenu::~QuestionMenu()
 {
 }
 
+int QuestionMenu::NombreQuestions(const std::string categorieString)
+{
+	int nombreQuestionsTotalesParCatégorie = 0;
+
+	//chargement du fichier
+	pugi::xml_document doc;
+
+	doc.load_file("C:/Dev/JIN4/JIN4/Questions.xml");
+
+	pugi::xml_node questions = doc.child("document");
+	pugi::xml_node categorie = questions.child(categorieString.c_str());
+
+	// recherche des nodes des questions
+
+	for (pugi::xml_node street = categorie.child("question"); street; street = street.next_sibling("question"))
+	{
+		nombreQuestionsTotalesParCatégorie++;
+	}
+	return nombreQuestionsTotalesParCatégorie;
+}
 
 sf::Text QuestionMenu::QuestionShow(std::vector<pugi::xml_node> &node, const int numeroQuestion) {
 	std::string question;
@@ -76,7 +96,6 @@ sf::Text* QuestionMenu::ReponseShow(std::vector<pugi::xml_node> &node, const int
 	return pointeurReponseAff;
 }
 
-
 int QuestionMenu::RetourneScore(int actualScore, QuestionMenu::QuestionMenuResultRep answer, std::vector<sf::Text*> ensemble, sf::Text* pointeurBonneRep) {
 	switch (answer)
 	{
@@ -96,7 +115,7 @@ int QuestionMenu::RetourneScore(int actualScore, QuestionMenu::QuestionMenuResul
 }
 
 
-QuestionMenu::QuestionMenuResult QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieString)
+int QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieString)
 {
 	sf::Text* pointeurBonneRep = NULL;
 
@@ -145,18 +164,41 @@ QuestionMenu::QuestionMenuResult QuestionMenu::Show(sf::RenderWindow& window, co
 	_menuItems.push_back(reponse2Button);
 	_menuItems.push_back(reponse3Button);
 
+	//determination du nombre de questions possible
+	int nombreQuestionsTotalesParCatégorie = NombreQuestions(categorieString);
+
 	// GoFetch
 	std::vector<pugi::xml_node> nodes;
 
 	//choix aléatoire des questions
 	std::vector<std::string> choix;
-	for (int i = 0; i < 5; i++) {
-		choix.push_back(std::to_string(rand() % nombreQuestionsTotalesParCatégorie + 1));
+
+
+	if (nombreQuestionsTotalesParCatégorie < 5) {
+		for (int i = 0; i < 5; i++) {
+			choix.push_back(std::to_string(rand() % nombreQuestionsTotalesParCatégorie + 1));
+		}
 	}
+	else {
+		choix.push_back(std::to_string(rand() % nombreQuestionsTotalesParCatégorie + 1));
+
+		while (choix.size() != 5) {
+			int pris = 0;
+			std::string aleatoir = std::to_string(rand() % nombreQuestionsTotalesParCatégorie + 1);
+			for (auto i : choix)
+				if (i != aleatoir) {
+					pris++;
+				}
+			if (pris == choix.size()) {
+				choix.push_back(aleatoir);
+			}
+		}
+	}
+
 
 	//chargement font
 	sf::Font font;
-	font.loadFromFile("C:/Dev/JIN4/JIN4/font/DAYROM__.ttf");
+	font.loadFromFile("C:/Dev/JIN4/JIN4/font/DIOGENES.ttf"); 
 
 	//chargement du fichier
 	pugi::xml_document doc;
@@ -167,14 +209,13 @@ QuestionMenu::QuestionMenuResult QuestionMenu::Show(sf::RenderWindow& window, co
 	pugi::xml_node categorie = questions.child(categorieString.c_str());
 
 	// recherche des nodes des questions
-	for (pugi::xml_node question = categorie.first_child(); question; question = question.next_sibling())
-	{
-		for (pugi::xml_attribute attr = question.first_attribute(); attr; attr = attr.next_attribute())
+	for (auto i : choix) {
+		for (pugi::xml_node question = categorie.first_child(); question; question = question.next_sibling())
 		{
-			std::string attrName = attr.name();
-			std::string attrValue = attr.value();
-
-			for (auto i : choix) {
+			for (pugi::xml_attribute attr = question.first_attribute(); attr; attr = attr.next_attribute())
+			{
+				std::string attrName = attr.name();
+				std::string attrValue = attr.value();			
 
 				if (attrName == "id" && attrValue == i)
 				{
@@ -215,6 +256,22 @@ QuestionMenu::QuestionMenuResult QuestionMenu::Show(sf::RenderWindow& window, co
 		questionAff.setStyle(sf::Text::Regular);
 		questionAff.setPosition(158,39);
 		questionAff.setString(question);
+
+		//on fait le tour des caractères du sf::Text
+		for (int i = 0; i < questionAff.getString().getSize(); i++)
+		{
+			//Si le caractère dépasse la boundingbox définit et que le caractère n'est pas égal à un retour à la ligne
+			if ((questionAff.findCharacterPos(i).x > (155 + 246)) && (questionAff.getString()[i] != '\n'))
+			{
+				//On va chercher le dernier caractère espace afin de faire des retour à la ligne par mot et non par caractère
+				while (questionAff.getString()[i] != ' ')--i;
+				//On ajoute le caractère de retour à la ligne en remplacent l'espace entre les deux mots par \n
+				sf::String str1 = questionAff.getString().toWideString().substr(0, i);
+				str1 += "\n";
+				str1 += questionAff.getString().toWideString().substr(i + 1);
+				questionAff.setString(str1);
+			}
+		}
 
 
 
@@ -267,7 +324,7 @@ QuestionMenu::QuestionMenuResult QuestionMenu::Show(sf::RenderWindow& window, co
 		score = RetourneScore(score, answer, ensemble, pointeurBonneRep);
 	}
 	std::cout << "Le score est " << score;
-	return Exit;
+	return score;
 }
 
 QuestionMenu::QuestionMenuResultRep QuestionMenu::HandleClick(int x, int y)
