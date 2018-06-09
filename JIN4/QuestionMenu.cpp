@@ -11,48 +11,14 @@ QuestionMenu::~QuestionMenu()
 {
 }
 
-std::vector<pugi::xml_node> QuestionMenu::GoFetch(const std::string categorieString) {
 
-	std::vector<pugi::xml_node> result;
-
-	//choix aléatoire des questions
-	std::vector<std::string> choix;
-	for (int i = 0; i < 5; i++) {
-		choix.push_back(std::to_string(rand() % nombreQuestionsTotalesParCatégorie + 1));
-	}
-
-	//chargement du fichier
-	pugi::xml_document doc;
-
-	doc.load_file("C:/Dev/JIN4/JIN4/Questions.xml");
-
-	pugi::xml_node questions = doc.child("document");
-	pugi::xml_node categorie = questions.child(categorieString.c_str());
-
-	// recherche des nodes des questions
-	for (pugi::xml_node question = categorie.first_child(); question; question = question.next_sibling())
-	{
-		for (pugi::xml_attribute attr = question.first_attribute(); attr; attr = attr.next_attribute())
-		{
-			std::string attrName = attr.name();
-			std::string attrValue = attr.value();
-
-			for (auto i : choix) {
-
-				if (attrName == "id" && attrValue == i)
-				{
-					result.push_back(question);
-				}
-			}
-		}
-	}
-
-	return result;
-}
-
-sf::Text QuestionMenu::QuestionShow(std::vector<pugi::xml_node> node, const int numeroQuestion) {
+sf::Text QuestionMenu::QuestionShow(std::vector<pugi::xml_node> &node, const int numeroQuestion) {
 	std::string question;
 	pugi::xml_node questionNode = node[numeroQuestion];
+
+
+	pugi::xml_attribute question1attr1 = (node[0]).first_attribute();
+
 
 	//récupération de la question
 	for (pugi::xml_attribute attr = questionNode.first_attribute(); attr; attr = attr.next_attribute())
@@ -60,7 +26,7 @@ sf::Text QuestionMenu::QuestionShow(std::vector<pugi::xml_node> node, const int 
 		std::string attrName = attr.name();
 		std::string attrValue = attr.value();
 
-		if (attrName.compare("enonce")) {
+		if (attrName == "enonce") {
 			question = attrValue;
 		}
 	}
@@ -78,10 +44,9 @@ sf::Text QuestionMenu::QuestionShow(std::vector<pugi::xml_node> node, const int 
 	return questionAff;
 }
 
-sf::Text* QuestionMenu::ReponseShow(std::vector<pugi::xml_node> node, const int numeroQuestion, const int numeroRep, sf::Text* pointeurBonneRep) {
+sf::Text* QuestionMenu::ReponseShow(std::vector<pugi::xml_node> &node, const int numeroQuestion, const int numeroRep, sf::Text* pointeurBonneRep) {
 	int i = 0;
 	sf::Text* pointeurReponseAff = NULL;
-
 
 	//récupération des réponses
 	for (pugi::xml_node reponse = node[numeroQuestion].first_child(); reponse; reponse = reponse.next_sibling())
@@ -92,7 +57,7 @@ sf::Text* QuestionMenu::ReponseShow(std::vector<pugi::xml_node> node, const int 
 				std::string attrName = attr.name();
 				std::string attrValue = attr.value();
 
-				if (attrName.compare("valeur")) {
+				if (attrName == "valeur") {
 					sf::Font font;
 					font.loadFromFile("C:/Dev/JIN4/JIN4/font/DAYROM__.ttf");
 					(*pointeurReponseAff).setFont(font);
@@ -102,7 +67,7 @@ sf::Text* QuestionMenu::ReponseShow(std::vector<pugi::xml_node> node, const int 
 					(*pointeurReponseAff).setString(attrValue);
 
 				}
-				if (attrName.compare("bool") && attrValue.compare("true")) {
+				if ((attrName == "bool") && (attrValue == "true")) {
 					pointeurBonneRep = pointeurReponseAff;
 				}
 			}
@@ -135,7 +100,7 @@ QuestionMenu::QuestionMenuResult QuestionMenu::Show(sf::RenderWindow& window, co
 {
 	sf::Text* pointeurBonneRep = NULL;
 
-	sf::Text question;
+	sf::Text questionAff;
 
 	sf::Text* reponse1 = new sf::Text;
 	sf::Text* reponse2 = new sf::Text;
@@ -147,60 +112,155 @@ QuestionMenu::QuestionMenuResult QuestionMenu::Show(sf::RenderWindow& window, co
 
 	//Load menu image from file
 	sf::Texture texture;
-	texture.loadFromFile("c:/Dev/JIN4/JIN4/images/the_muses-menu.png");
+	texture.loadFromFile("c:/Dev/JIN4/JIN4/images/the_muses-menu-question.png");
 	sf::Sprite sprite(texture);
 
 	//Setup clickable regions
 
 	//PlaySolo menu item coordinates
 	MenuItem reponse1Button;
-	reponse1Button.rect.left = 190;
-	reponse1Button.rect.top = 167;
-	reponse1Button.rect.width = 178;
-	reponse1Button.rect.height = 56;
+	reponse1Button.rect.left = 112;
+	reponse1Button.rect.top = 213;
+	reponse1Button.rect.width = 333;
+	reponse1Button.rect.height = 93;
 	reponse1Button.action = Reponse1;
 
 	//PlayMulti menu item coordinates
 	MenuItem reponse2Button;
-	reponse2Button.rect.left = 80;
-	reponse2Button.rect.top = 345;
-	reponse2Button.rect.width = 404;
-	reponse2Button.rect.height = 51;
+	reponse2Button.rect.left = 112;
+	reponse2Button.rect.top = 351;
+	reponse2Button.rect.width = 333;
+	reponse2Button.rect.height = 93;
 	reponse2Button.action = Reponse2;
 
 	//Exit menu item coordinates
 	MenuItem reponse3Button;
-	reponse3Button.rect.left = 162;
-	reponse3Button.rect.top = 520;
-	reponse3Button.rect.width = 231;
-	reponse3Button.rect.height = 51;
+	reponse3Button.rect.left = 112;
+	reponse3Button.rect.top = 492;
+	reponse3Button.rect.width = 333;
+	reponse3Button.rect.height = 93;
 	reponse3Button.action = Reponse3;
 
 	_menuItems.push_back(reponse1Button);
 	_menuItems.push_back(reponse2Button);
 	_menuItems.push_back(reponse3Button);
 
+	// GoFetch
+	std::vector<pugi::xml_node> nodes;
 
-	std::vector<pugi::xml_node> node = GoFetch(categorieString);
+	//choix aléatoire des questions
+	std::vector<std::string> choix;
+	for (int i = 0; i < 5; i++) {
+		choix.push_back(std::to_string(rand() % nombreQuestionsTotalesParCatégorie + 1));
+	}
+
+	//chargement font
+	sf::Font font;
+	font.loadFromFile("C:/Dev/JIN4/JIN4/font/DAYROM__.ttf");
+
+	//chargement du fichier
+	pugi::xml_document doc;
+
+	doc.load_file("C:/Dev/JIN4/JIN4/Questions.xml");
+
+	pugi::xml_node questions = doc.child("document");
+	pugi::xml_node categorie = questions.child(categorieString.c_str());
+
+	// recherche des nodes des questions
+	for (pugi::xml_node question = categorie.first_child(); question; question = question.next_sibling())
+	{
+		for (pugi::xml_attribute attr = question.first_attribute(); attr; attr = attr.next_attribute())
+		{
+			std::string attrName = attr.name();
+			std::string attrValue = attr.value();
+
+			for (auto i : choix) {
+
+				if (attrName == "id" && attrValue == i)
+				{
+					nodes.push_back(question);
+				}
+			}
+		}
+	}
+
+	//Tours
 	for (int tour = 0; tour < 5; tour++) {
 		//affichage question 
-		question = QuestionShow(node, tour);
-		question.setPosition(10, 20);
+		
+		std::string question;
+		pugi::xml_node questionNode = nodes[tour];
+
+
+		pugi::xml_attribute question1attr1 = (nodes[0]).first_attribute();
+
+
+		//récupération de la question
+		for (pugi::xml_attribute attr = questionNode.first_attribute(); attr; attr = attr.next_attribute())
+		{
+			std::string attrName = attr.name();
+			std::string attrValue = attr.value();
+
+			if (attrName == "enonce") {
+				question = attrValue;
+			}
+		}
+
+		//affichage de la question
+
+		sf::Text questionAff;
+		questionAff.setFont(font);
+		questionAff.setCharacterSize(20);
+		questionAff.setFillColor(sf::Color::Black);
+		questionAff.setStyle(sf::Text::Regular);
+		questionAff.setPosition(158,39);
+		questionAff.setString(question);
+
+
 
 		//affichage reponses
-		for (int rep = 0; rep < 3; rep++) {
-			ensemble[rep] = ReponseShow(node, tour, rep, pointeurBonneRep);
-		}
-		(*reponse1).setPosition(50, 100);
-		(*reponse2).setPosition(50, 200);
-		(*reponse3).setPosition(50, 300);
+		int rep = 0;
 
+		//récupération des réponses
+		for (pugi::xml_node reponse = nodes[tour].first_child(); reponse; reponse = reponse.next_sibling())
+		{
+			for (pugi::xml_attribute attr = reponse.first_attribute(); attr; attr = attr.next_attribute())
+			{
+				std::string attrName = attr.name();
+				std::string attrValue = attr.value();
+				
+				if (attrName == "valeur") {
+					(*ensemble[rep]).setFont(font);
+					(*ensemble[rep]).setCharacterSize(25);
+					(*ensemble[rep]).setFillColor(sf::Color::Black);
+					(*ensemble[rep]).setStyle(sf::Text::Regular);
+					(*ensemble[rep]).setString(attrValue);
+					
+				}
+			if ((attrName == "bool") && (attrValue == "true")) {
+					pointeurBonneRep = ensemble[rep];
+				}
+			}
+			rep++;
+		}
+		
 
 		window.draw(sprite);
+
+		(*reponse1).setPosition(187, 241);
+		(*reponse2).setPosition(187, 378);
+		(*reponse3).setPosition(187, 515);
+
+		window.draw(questionAff);
+
+		window.draw(*reponse1);
+		window.draw(*reponse2);
+		window.draw(*reponse3);
+
 		window.display();
 
 		QuestionMenu::QuestionMenuResultRep answer = GetMenuResponse(window);
-		while (GetMenuResponse(window) == Rate) {
+		while (answer == Rate) {
 			answer = GetMenuResponse(window);
 		}
 

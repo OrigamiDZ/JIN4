@@ -14,11 +14,11 @@
   </musique>
   <tragedie>
     <question id ="1" enonce ="Comment se nomme la belle-mere d'Hippolyte, fils de Thesee ?">
-      <reponse valeur="Héra" bool="false" />
-      <reponse valeur="Phèdre" bool="true" />
+      <reponse valeur="Hera" bool="false" />
+      <reponse valeur="Phedre" bool="true" />
       <reponse valeur="Andromaque" bool="false" />
     </question>
-      <question id ="2" enonce ="Qui Antigone souhaite-t-elle donner des rites funeraires en depit de l'interdiction officielle de son oncle Creon ?">
+    <question id ="2" enonce ="Qui Antigone souhaite-t-elle donner des rites funeraires en depit de l'interdiction officielle de son oncle Creon ?">
       <reponse valeur="Polynice" bool="true" />
       <reponse valeur="Eteocle" bool="false" />
       <reponse valeur="Tiresias" bool="false" />

@@ -103,6 +103,9 @@
     <Image Include="images\the_muses-menu-second.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="images\the_muses-menu-question.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Questions.xml">
