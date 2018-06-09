@@ -62,10 +62,12 @@ void Game::GameLoop()
 	case Game::ShowingSecondMenu:
 	{
 		ShowSecondMenu();
+		break;
 	}
 	case Game::PlayingSolo:
 	{
 		ShowQuestionMenu();
+		break;
 	}
 	case Game::PlayingMulti:
 	{
