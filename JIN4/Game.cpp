@@ -116,17 +116,14 @@ void Game::ShowMenu()
 				Sleep(1500);
 				mNetworkLogic.service();
 			}
-			std::cout << "Out de la boucle !" << std::endl;
 			ShowSecondMenu();
 		}
 		else {
-			std::cout << "Le player 2 est arrivé";
 			subject = "";
 			while (subject == "") {
 				Sleep(1500);
 				mNetworkLogic.service();
 			}
-			std::cout << "Le player 2 est sorti";
 			_gameState = Game::PlayingMulti;
 		}
 		break;
@@ -136,10 +133,8 @@ void Game::ShowMenu()
 void Game::ShowSecondMenu()
 {
 	SecondMenu secondMenu(this);
-	std::cout << "Dans SecondMenu !" << std::endl;
 
 	SecondMenu::SecondMenuResult result = secondMenu.Show(_mainWindow);
-	std::cout << "Second Menu Out !" << std::endl;
 
 	switch (result)
 	{
@@ -272,17 +267,14 @@ void Game::ShowQuestionMultiMenu()
 				Sleep(1500);
 				mNetworkLogic.service();
 			}
-			std::cout << "Out de la boucle !" << std::endl;
 			ShowSecondMenu();
 		}
 		else {
-			std::cout << "Le player 2 est arrivé";
 			subject = "";
 			while (subject == "") {
 				Sleep(1500);
 				mNetworkLogic.service();
 			}
-			std::cout << "Le player 2 est sorti";
 			_gameState = Game::PlayingMulti;
 		}
 		break;
