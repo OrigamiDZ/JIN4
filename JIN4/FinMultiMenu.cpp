@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "FinMultiMenu.h"
+#include "Game.h"
 
 
-FinMultiMenu::FinMultiMenu()
+FinMultiMenu::FinMultiMenu(Game *game) :
+	mGame(game)
 {
 }
 
@@ -100,6 +102,8 @@ FinMultiMenu::FinMultiMenuResult  FinMultiMenu::GetMenuResponse(sf::RenderWindow
 
 		while (window.pollEvent(menuEvent))
 		{
+			(mGame->mNetworkLogic).service();
+
 			if (menuEvent.type == sf::Event::MouseButtonPressed)
 			{
 				return HandleClick(menuEvent.mouseButton.x, menuEvent.mouseButton.y);

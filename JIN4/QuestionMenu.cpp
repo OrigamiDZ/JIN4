@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "QuestionMenu.h"
 #include <iostream>
+#include "Game.h"
 
-QuestionMenu::QuestionMenu()
+QuestionMenu::QuestionMenu(Game *game) :
+	mGame(game)
 {
 }
 
@@ -183,6 +185,7 @@ int QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieStri
 		choix.push_back(std::to_string(rand() % nombreQuestionsTotalesParCatégorie + 1));
 
 		while (choix.size() != 5) {
+			(mGame->mNetworkLogic).service();
 			int pris = 0;
 			std::string aleatoir = std::to_string(rand() % nombreQuestionsTotalesParCatégorie + 1);
 			for (auto i : choix)
@@ -318,6 +321,8 @@ int QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieStri
 
 		QuestionMenu::QuestionMenuResultRep answer = GetMenuResponse(window);
 		while (answer == Rate) {
+			(mGame->mNetworkLogic).service();
+
 			answer = GetMenuResponse(window);
 		}
 
@@ -356,7 +361,7 @@ QuestionMenu::QuestionMenuResultRep  QuestionMenu::GetMenuResponse(sf::RenderWin
 
 	while (42 != 43)
 	{
-
+		(mGame->mNetworkLogic).service();
 		while (window.pollEvent(menuEvent))
 		{
 			if (menuEvent.type == sf::Event::MouseButtonPressed)

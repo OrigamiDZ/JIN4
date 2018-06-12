@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "EcranAcceuil.h"
+#include "Game.h"
 
-
-EcranAcceuil::EcranAcceuil()
+EcranAcceuil::EcranAcceuil(Game *game) :
+	mGame(game)
 {
 }
 
@@ -27,10 +28,9 @@ void EcranAcceuil::Show(sf::RenderWindow & renderWindow)
 	sf::Event event;
 	while (true)
 	{
-
 		while (renderWindow.pollEvent(event))
 		{
-
+			(mGame->mNetworkLogic).service();
 			if (event.type == sf::Event::EventType::KeyPressed
 				|| event.type == sf::Event::EventType::MouseButtonPressed
 				|| event.type == sf::Event::EventType::Closed)

@@ -1,8 +1,11 @@
 #include "stdafx.h"
 #include "MainMenu.h"
 #include <iostream>
+#include "Game.h"
 
-MainMenu::MainMenu()
+
+MainMenu::MainMenu(Game *game) :
+	mGame(game)
 {
 }
 
@@ -86,6 +89,7 @@ MainMenu::MenuResult  MainMenu::GetMenuResponse(sf::RenderWindow& window)
 
 		while (window.pollEvent(menuEvent))
 		{
+			(mGame->mNetworkLogic).service();
 			if (menuEvent.type == sf::Event::MouseButtonPressed)
 			{
 				return HandleClick(menuEvent.mouseButton.x, menuEvent.mouseButton.y);

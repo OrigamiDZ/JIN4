@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "FinMenu.h"
+#include "Game.h"
 
 
-FinMenu::FinMenu()
+FinMenu::FinMenu(Game *game) :
+	mGame(game)
 {
 }
 
@@ -90,6 +92,7 @@ FinMenu::FinMenuResult  FinMenu::GetMenuResponse(sf::RenderWindow& window)
 
 	while (42 != 43)
 	{
+		(mGame->mNetworkLogic).service();
 
 		while (window.pollEvent(menuEvent))
 		{

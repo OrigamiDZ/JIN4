@@ -3,11 +3,12 @@
 #include "SFML\Graphics.hpp"
 #include <list>
 #include <pugixml.hpp>
+#include "NetworkLogic.h"
 
 class QuestionMenu
 {
 public:
-	QuestionMenu();
+	QuestionMenu(Game *game);
 	~QuestionMenu();
 	enum QuestionMenuResultRep { Rate, Reponse1, Reponse2, Reponse3, Quitter };
 	sf::Text QuestionShow(std::vector<pugi::xml_node> &node, const int numeroQuestion);
@@ -23,6 +24,7 @@ public:
 	int Show(sf::RenderWindow& window, const std::string categorieString);
 
 private:
+	Game * mGame;
 	int NombreQuestions(const std::string categorieString);
 
 	QuestionMenuResultRep GetMenuResponse(sf::RenderWindow& window);

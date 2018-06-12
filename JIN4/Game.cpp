@@ -90,14 +90,14 @@ void Game::GameLoop()
 
 void Game::ShowSplashScreen()
 {
-	EcranAcceuil splashScreen;
+	EcranAcceuil splashScreen(this);
 	splashScreen.Show(_mainWindow);
 	_gameState = Game::ShowingMenu;
 }
 
 void Game::ShowMenu()
 {
-	MainMenu mainMenu;
+	MainMenu mainMenu(this);
 	MainMenu::MenuResult result = mainMenu.Show(_mainWindow);
 	switch (result)
 	{
@@ -135,7 +135,7 @@ void Game::ShowMenu()
 
 void Game::ShowSecondMenu()
 {
-	SecondMenu secondMenu;
+	SecondMenu secondMenu(this);
 	std::cout << "Dans SecondMenu !" << std::endl;
 
 	SecondMenu::SecondMenuResult result = secondMenu.Show(_mainWindow);
@@ -226,9 +226,9 @@ void Game::ShowSecondMenu()
 
 void Game::ShowQuestionMenu()
 {
-	QuestionMenu questionMenu;
+	QuestionMenu questionMenu(this);
 	int score = questionMenu.Show(_mainWindow, subject);
-	FinMenu finMenu;
+	FinMenu finMenu(this);
 	FinMenu::FinMenuResult result = finMenu.Show(_mainWindow, score);
 	switch (result)
 	{
@@ -257,7 +257,7 @@ void Game::ShowQuestionMultiMenu()
 			mNetworkLogic.service();
 		}
 	}
-	FinMultiMenu finMultiMenu;
+	FinMultiMenu finMultiMenu(this);
 	FinMultiMenu::FinMultiMenuResult result = finMultiMenu.Show(_mainWindow, score, scoreAdversaire);
 	switch (result)
 	{

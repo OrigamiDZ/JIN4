@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "SecondMenu.h"
+#include "Game.h"
 
 
-SecondMenu::SecondMenu()
+SecondMenu::SecondMenu(Game *game) :
+	mGame(game)
 {
 }
 
@@ -150,6 +152,8 @@ SecondMenu::SecondMenuResult  SecondMenu::GetMenuResponse(sf::RenderWindow& wind
 
 		while (window.pollEvent(menuEvent))
 		{
+			(mGame->mNetworkLogic).service();
+
 			if (menuEvent.type == sf::Event::MouseButtonPressed)
 			{
 				return HandleClick(menuEvent.mouseButton.x, menuEvent.mouseButton.y);
