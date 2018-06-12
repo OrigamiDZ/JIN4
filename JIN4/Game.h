@@ -1,30 +1,44 @@
 #pragma once
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
+#include "NetworkLogic.h"
+
 
 class Game
 {
 
 public:
-	static void Start();
+	void Start();
 	Game();
-	~Game();
-
+	
+	bool twoPlayers;
 	std::vector<std::string> data;
+	std::string subject;
+	NetworkLogic mNetworkLogic;
+
 
 private:
-	static bool IsExiting();
-	static void GameLoop();
+	int	mPlayerNumber;
 
-	static void ShowSplashScreen();
-	static void ShowMenu();
-	static void ShowSecondMenu();
-	static void ShowQuestionMenu();
+	 bool IsExiting();
+	 void GameLoop();
+
+	 void ShowSplashScreen();
+	 void ShowMenu();
+	 void ShowSecondMenu();
+	 void ShowQuestionMenu();
+	 void ShowQuestionMultiMenu();
+
 
 	enum GameState {
-		Uninitialized, ShowingSplash, Paused, ShowingSecondMenu,
-		PlayingSolo, PlayingMulti,
-		ShowingMenu,  Exiting
+		Uninitialized, 
+		ShowingSplash, 
+		Paused, 
+		ShowingSecondMenu,
+		PlayingSolo, 
+		PlayingMulti,
+		ShowingMenu, 
+		Exiting
 	};
 
 	static GameState _gameState;

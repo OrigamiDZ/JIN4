@@ -27,8 +27,10 @@ void EcranAcceuil::Show(sf::RenderWindow & renderWindow)
 	sf::Event event;
 	while (true)
 	{
+
 		while (renderWindow.pollEvent(event))
 		{
+
 			if (event.type == sf::Event::EventType::KeyPressed
 				|| event.type == sf::Event::EventType::MouseButtonPressed
 				|| event.type == sf::Event::EventType::Closed)

@@ -90,11 +90,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>Include;C:\SFML-2.4.2\include;C:\Photon-Windows-Sdk_v4-1-9-0</AdditionalIncludeDirectories>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\SFML-2.4.2\lib;C:\Photon-Windows-Sdk_v4-1-9-0\Common-cpp\lib;C:\Photon-Windows-Sdk_v4-1-9-0\Photon-cpp\lib;C:\Photon-Windows-Sdk_v4-1-9-0\LoadBalancing-cpp\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Common-cpp_vc14_$(Configuration)_windows_md_$(Platform).lib;Photon-cpp_vc14_$(Configuration)_windows_md_$(Platform).lib;LoadBalancing-cpp_vc14_$(Configuration)_windows_md_$(Platform).lib;sfml-audio-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -150,12 +157,15 @@
     <ClInclude Include="EcranAcceuil.h" />
     <ClInclude Include="FinMenu.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="QuestionMultiMenu.h" />
+    <ClInclude Include="UIListener.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="NetworkLogic.h" />
     <ClInclude Include="QuestionMenu.h" />
     <ClInclude Include="SecondMenu.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StdIO_UIListener.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EcranAcceuil.cpp" />
@@ -163,7 +173,9 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="JIN4.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="NetworkLogic.cpp" />
     <ClCompile Include="QuestionMenu.cpp" />
+    <ClCompile Include="QuestionMultiMenu.cpp" />
     <ClCompile Include="SecondMenu.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -171,12 +183,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="StdIO_UIListener.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="images\Mainmenu.png" />
     <Image Include="images\Nine_Muses.png" />
     <Image Include="images\Splashscreen.png" />
+    <Image Include="images\the_muses-menu-fin-multi.png" />
     <Image Include="images\the_muses-menu-fin.png" />
     <Image Include="images\the_muses-menu-question.png" />
     <Image Include="images\the_muses-menu-second.png" />
@@ -191,6 +204,9 @@
   <ItemGroup>
     <Font Include="font\DAYROM__.ttf" />
     <Font Include="font\DIOGENES.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

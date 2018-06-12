@@ -4,21 +4,29 @@
 #include "MainMenu.h"
 #include "SecondMenu.h"
 #include "QuestionMenu.h"
+#include "QuestionMultiMenu.h"
 #include "FinMenu.h"
+#include "windows.h"
+#include <iostream>
 
 
-std::string subject;
+static const ExitGames::Common::JString appID = L"774e251d-8a12-444d-88c0-96130444aba0"; // set your app id here
+static const ExitGames::Common::JString appVersion = L"1.0";
+static ExitGames::Common::JString gameName = L"TP_SIR";
+
+
 bool solo;
 
 Game::GameState Game::_gameState = Uninitialized;
 sf::RenderWindow Game::_mainWindow;
 
 Game::Game()
-{
-}
+	: mNetworkLogic(appID, appVersion, this)
 
-Game::~Game()
 {
+	mNetworkLogic.connect();
+	mNetworkLogic.joinOrCreateRoom(gameName);
+	mPlayerNumber = mNetworkLogic.getNumber();
 }
 
 void Game::Start(void)
@@ -33,7 +41,7 @@ void Game::Start(void)
 	{
 		GameLoop();
 	}
-
+	mNetworkLogic.disconnect();
 	_mainWindow.close();
 }
 
@@ -47,6 +55,7 @@ bool Game::IsExiting()
 
 void Game::GameLoop()
 {
+	mNetworkLogic.service();
 	switch (_gameState)
 	{
 	case Game::ShowingMenu:
@@ -71,19 +80,7 @@ void Game::GameLoop()
 	}
 	case Game::PlayingMulti:
 	{
-		sf::Event currentEvent;
-		while (_mainWindow.pollEvent(currentEvent))
-		{
-			_mainWindow.clear(sf::Color(255, 255, 255));
-			_mainWindow.display();
-
-			if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
-
-			if (currentEvent.type == sf::Event::KeyPressed)
-			{
-				if (currentEvent.key.code == sf::Keyboard::Escape) ShowMenu();
-			}
-		}
+		ShowQuestionMenu();
 		break;
 	}
 	}
@@ -111,8 +108,32 @@ void Game::ShowMenu()
 		solo = true;
 		break;
 	case MainMenu::PlayMulti:
-		_gameState = Game::ShowingSecondMenu;
 		solo = false;
+		mNetworkLogic.service();
+		if (mPlayerNumber == 1) {
+			sf::Texture texture;
+			texture.loadFromFile("c:/Dev/JIN4/JIN4/images/the_muses.png");
+			sf::Sprite sprite(texture);
+			mainMenu.~MainMenu();
+			_mainWindow.draw(sprite);
+			_mainWindow.display();
+			while (!twoPlayers) {
+				Sleep(500);
+				mNetworkLogic.service();
+			}
+			std::cout << "Out de la boucle !" << std::endl;
+			ShowSecondMenu();
+		}
+		else {
+			std::cout << "Le player 2 est la";
+			subject = "";
+			while (subject == "") {
+				Sleep(500);
+				mNetworkLogic.service();
+			}
+			mainMenu.~MainMenu();
+			_gameState = Game::PlayingMulti;
+		}
 		break;
 	}
 }
@@ -120,7 +141,11 @@ void Game::ShowMenu()
 void Game::ShowSecondMenu()
 {
 	SecondMenu secondMenu;
+	std::cout << "Dans SecondMenu !" << std::endl;
+
 	SecondMenu::SecondMenuResult result = secondMenu.Show(_mainWindow);
+	std::cout << "Second Menu Out !" << std::endl;
+
 	switch (result)
 	{
 	case SecondMenu::Exit:
@@ -129,50 +154,77 @@ void Game::ShowSecondMenu()
 	case SecondMenu::Back:
 		_gameState = Game::ShowingMenu;
 		break;
-	case SecondMenu::Histoire:
-		subject = "histoire";
-		if (solo) { _gameState = Game::PlayingSolo; }
-		else if (!(solo)) { _gameState = Game::PlayingMulti; }
-		break;
-	case SecondMenu::Comedie:
-		subject = "comedie";
-		if (solo) { _gameState = Game::PlayingSolo; }
-		else if (!(solo)) { _gameState = Game::PlayingMulti; }
-		break;
 	case SecondMenu::Litterature:
 		subject = "litterature";
 		if (solo) { _gameState = Game::PlayingSolo; }
-		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		else if (!(solo)) {
+			_gameState = Game::PlayingMulti;
+			mNetworkLogic.sendSubject(1);
+		}
+		break;
+	case SecondMenu::Histoire:
+		subject = "histoire";
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) {
+			mNetworkLogic.sendSubject(2);
+			_gameState = Game::PlayingMulti; 
+		}
 		break;
 	case SecondMenu::Chant:
 		subject = "chant";
 		if (solo) { _gameState = Game::PlayingSolo; }
-		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		else if (!(solo)) {
+			_gameState = Game::PlayingMulti;
+			mNetworkLogic.sendSubject(3);
+		}
 		break;
 	case SecondMenu::Musique:
 		subject = "musique";
 		if (solo) { _gameState = Game::PlayingSolo; }
-		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		else if (!(solo)) {
+			_gameState = Game::PlayingMulti;
+			mNetworkLogic.sendSubject(4);
+		}
 		break;
 	case SecondMenu::Tragedie:
 		subject = "tragedie";
 		if (solo) { _gameState = Game::PlayingSolo; }
-		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		else if (!(solo)) {
+			_gameState = Game::PlayingMulti;
+			mNetworkLogic.sendSubject(5);
+		}
 		break;
-	case SecondMenu::Astrologie:
-		subject = "astrologie";
+	case SecondMenu::Comedie:
+		subject = "comedie";
 		if (solo) { _gameState = Game::PlayingSolo; }
-		else if (!(solo)) { _gameState = Game::PlayingMulti; }
-		break;
-	case SecondMenu::Rhetorique:
-		subject = "rhetorique";
-		if (solo) { _gameState = Game::PlayingSolo; }
-		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		else if (!(solo)) {
+			_gameState = Game::PlayingMulti;
+			mNetworkLogic.sendSubject(6);
+		}
 		break;
 	case SecondMenu::Danse:
 		subject = "danse";
 		if (solo) { _gameState = Game::PlayingSolo; }
-		else if (!(solo)) { _gameState = Game::PlayingMulti; }
+		else if (!(solo)) {
+			_gameState = Game::PlayingMulti;
+			mNetworkLogic.sendSubject(7);
+		}
+		break;
+	case SecondMenu::Rhetorique:
+		subject = "rhetorique";
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) {
+			_gameState = Game::PlayingMulti;
+			mNetworkLogic.sendSubject(8);
+		}
+		break;
+	case SecondMenu::Astrologie:
+		subject = "astrologie";
+		if (solo) { _gameState = Game::PlayingSolo; }
+		else if (!(solo)) {
+			_gameState = Game::PlayingMulti;
+			mNetworkLogic.sendSubject(9);
+		}
 		break;
 	}
 }
@@ -191,13 +243,29 @@ void Game::ShowQuestionMenu()
 	case FinMenu::Recommencer:
 		ShowQuestionMenu();
 		break;
+		case FinMenu::Exit:
+		_gameState = Game::Exiting;
+		break;
+	}
+
+}
+
+void Game::ShowQuestionMultiMenu()
+{
+	QuestionMultiMenu questionMultiMenu(this);
+	int score = questionMultiMenu.Show(_mainWindow, subject);
+	FinMenu finMenu;
+	FinMenu::FinMenuResult result = finMenu.Show(_mainWindow, score);
+	switch (result)
+	{
+	case FinMenu::Autre:
+		_gameState = Game::ShowingSecondMenu;
+		break;
+	case FinMenu::Recommencer:
+		ShowQuestionMenu();
+		break;
 	case FinMenu::Exit:
 		_gameState = Game::Exiting;
 		break;
-
-
 	}
 }
-
-
-

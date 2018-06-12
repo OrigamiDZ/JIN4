@@ -1,17 +1,14 @@
 #include "stdafx.h"
-#include "QuestionMenu.h"
+#include "QuestionMultiMenu.h"
 #include <iostream>
+#include "Game.h"
 
-QuestionMenu::QuestionMenu()
-{
+
+QuestionMultiMenu::QuestionMultiMenu(Game *game) :
+	mGame(game){
 }
 
-
-QuestionMenu::~QuestionMenu()
-{
-}
-
-int QuestionMenu::NombreQuestions(const std::string categorieString)
+int QuestionMultiMenu::NombreQuestions(const std::string categorieString)
 {
 	int nombreQuestionsTotalesParCatégorie = 0;
 
@@ -32,7 +29,7 @@ int QuestionMenu::NombreQuestions(const std::string categorieString)
 	return nombreQuestionsTotalesParCatégorie;
 }
 
-sf::Text QuestionMenu::QuestionShow(std::vector<pugi::xml_node> &node, const int numeroQuestion) {
+sf::Text QuestionMultiMenu::QuestionMultiShow(std::vector<pugi::xml_node> &node, const int numeroQuestion) {
 	std::string question;
 	pugi::xml_node questionNode = node[numeroQuestion];
 
@@ -64,48 +61,17 @@ sf::Text QuestionMenu::QuestionShow(std::vector<pugi::xml_node> &node, const int
 	return questionAff;
 }
 
-sf::Text* QuestionMenu::ReponseShow(std::vector<pugi::xml_node> &node, const int numeroQuestion, const int numeroRep, sf::Text* pointeurBonneRep) {
-	int i = 0;
-	sf::Text* pointeurReponseAff = NULL;
 
-	//récupération des réponses
-	for (pugi::xml_node reponse = node[numeroQuestion].first_child(); reponse; reponse = reponse.next_sibling())
-	{
-		if (i == numeroRep) {
-			for (pugi::xml_attribute attr = reponse.first_attribute(); attr; attr = attr.next_attribute())
-			{
-				std::string attrName = attr.name();
-				std::string attrValue = attr.value();
-
-				if (attrName == "valeur") {
-					sf::Font font;
-					font.loadFromFile("C:/Dev/JIN4/JIN4/font/DAYROM__.ttf");
-					(*pointeurReponseAff).setFont(font);
-					(*pointeurReponseAff).setCharacterSize(25);
-					(*pointeurReponseAff).setFillColor(sf::Color::White);
-					(*pointeurReponseAff).setStyle(sf::Text::Regular);
-					(*pointeurReponseAff).setString(attrValue);
-
-				}
-				if ((attrName == "bool") && (attrValue == "true")) {
-					pointeurBonneRep = pointeurReponseAff;
-				}
-			}
-		}
-	}
-	return pointeurReponseAff;
-}
-
-int QuestionMenu::RetourneScore(int actualScore, QuestionMenu::QuestionMenuResultRep answer, std::vector<sf::Text*> ensemble, sf::Text* pointeurBonneRep) {
+int QuestionMultiMenu::RetourneScore(int actualScore, QuestionMultiMenu::QuestionMultiMenuResultRep answer, std::vector<sf::Text*> ensemble, sf::Text* pointeurBonneRep) {
 	switch (answer)
 	{
-	case QuestionMenu::Reponse1:
+	case QuestionMultiMenu::Reponse1:
 		if (ensemble[0] == pointeurBonneRep) { actualScore++; }
 		break;
-	case QuestionMenu::Reponse2:
+	case QuestionMultiMenu::Reponse2:
 		if (ensemble[1] == pointeurBonneRep) { actualScore++; }
 		break;
-	case QuestionMenu::Reponse3:
+	case QuestionMultiMenu::Reponse3:
 		if (ensemble[2] == pointeurBonneRep) { actualScore++; }
 		break;
 	default:
@@ -115,7 +81,7 @@ int QuestionMenu::RetourneScore(int actualScore, QuestionMenu::QuestionMenuResul
 }
 
 
-int QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieString)
+int QuestionMultiMenu::Show(sf::RenderWindow& window, const std::string categorieString)
 {
 	sf::Text* pointeurBonneRep = NULL;
 
@@ -198,7 +164,7 @@ int QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieStri
 
 	//chargement font
 	sf::Font font;
-	font.loadFromFile("C:/Dev/JIN4/JIN4/font/DIOGENES.ttf"); 
+	font.loadFromFile("C:/Dev/JIN4/JIN4/font/DIOGENES.ttf");
 
 	//chargement du fichier
 	pugi::xml_document doc;
@@ -215,7 +181,7 @@ int QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieStri
 			for (pugi::xml_attribute attr = question.first_attribute(); attr; attr = attr.next_attribute())
 			{
 				std::string attrName = attr.name();
-				std::string attrValue = attr.value();			
+				std::string attrValue = attr.value();
 
 				if (attrName == "id" && attrValue == i)
 				{
@@ -228,7 +194,7 @@ int QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieStri
 	//Tours
 	for (int tour = 0; tour < 5; tour++) {
 		//affichage question 
-		
+
 		std::string question;
 		pugi::xml_node questionNode = nodes[tour];
 
@@ -254,14 +220,14 @@ int QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieStri
 		questionAff.setCharacterSize(20);
 		questionAff.setFillColor(sf::Color::Black);
 		questionAff.setStyle(sf::Text::Regular);
-		questionAff.setPosition(158,39);
+		questionAff.setPosition(158, 39);
 		questionAff.setString(question);
 
 		//on fait le tour des caractères du sf::Text
 		for (int i = 0; i < int(questionAff.getString().getSize()); i++)
 		{
 			//Si le caractère dépasse la boundingbox définit et que le caractère n'est pas égal à un retour à la ligne
-			if ((questionAff.findCharacterPos(i).x > (155 + 246)) && (questionAff.getString()[i] != '\n'))
+			if ((questionAff.findCharacterPos(i).x >(155 + 246)) && (questionAff.getString()[i] != '\n'))
 			{
 				//On va chercher le dernier caractère espace afin de faire des retour à la ligne par mot et non par caractère
 				while (questionAff.getString()[i] != ' ')--i;
@@ -285,22 +251,22 @@ int QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieStri
 			{
 				std::string attrName = attr.name();
 				std::string attrValue = attr.value();
-				
+
 				if (attrName == "valeur") {
 					(*ensemble[rep]).setFont(font);
 					(*ensemble[rep]).setCharacterSize(25);
 					(*ensemble[rep]).setFillColor(sf::Color::Black);
 					(*ensemble[rep]).setStyle(sf::Text::Regular);
 					(*ensemble[rep]).setString(attrValue);
-					
+
 				}
-			if ((attrName == "bool") && (attrValue == "true")) {
+				if ((attrName == "bool") && (attrValue == "true")) {
 					pointeurBonneRep = ensemble[rep];
 				}
 			}
 			rep++;
 		}
-		
+
 
 		window.draw(sprite);
 
@@ -316,7 +282,7 @@ int QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieStri
 
 		window.display();
 
-		QuestionMenu::QuestionMenuResultRep answer = GetMenuResponse(window);
+		QuestionMultiMenu::QuestionMultiMenuResultRep answer = GetMenuResponse(window);
 		while (answer == Rate) {
 			answer = GetMenuResponse(window);
 		}
@@ -327,7 +293,7 @@ int QuestionMenu::Show(sf::RenderWindow& window, const std::string categorieStri
 	return score;
 }
 
-QuestionMenu::QuestionMenuResultRep QuestionMenu::HandleClick(int x, int y)
+QuestionMultiMenu::QuestionMultiMenuResultRep QuestionMultiMenu::HandleClick(int x, int y)
 {
 	std::list<MenuItem>::iterator it;
 
@@ -350,7 +316,7 @@ QuestionMenu::QuestionMenuResultRep QuestionMenu::HandleClick(int x, int y)
 }
 
 
-QuestionMenu::QuestionMenuResultRep  QuestionMenu::GetMenuResponse(sf::RenderWindow& window)
+QuestionMultiMenu::QuestionMultiMenuResultRep  QuestionMultiMenu::GetMenuResponse(sf::RenderWindow& window)
 {
 	sf::Event menuEvent;
 
@@ -359,6 +325,8 @@ QuestionMenu::QuestionMenuResultRep  QuestionMenu::GetMenuResponse(sf::RenderWin
 
 		while (window.pollEvent(menuEvent))
 		{
+			(mGame->mNetworkLogic).service();
+
 			if (menuEvent.type == sf::Event::MouseButtonPressed)
 			{
 				return HandleClick(menuEvent.mouseButton.x, menuEvent.mouseButton.y);

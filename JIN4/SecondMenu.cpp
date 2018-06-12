@@ -103,13 +103,13 @@ SecondMenu::SecondMenuResult SecondMenu::Show(sf::RenderWindow& window)
 
 	_menuItems.push_back(litteratureButton);
 	_menuItems.push_back(histoireButton);
+	_menuItems.push_back(chantButton);
 	_menuItems.push_back(musiqueButton);
 	_menuItems.push_back(tragedieButton);
 	_menuItems.push_back(comedieButton);
 	_menuItems.push_back(danseButton);
 	_menuItems.push_back(rhetoriqueButton);
 	_menuItems.push_back(astrologieButton);
-	_menuItems.push_back(chantButton);
 	_menuItems.push_back(backButton);
 
 
