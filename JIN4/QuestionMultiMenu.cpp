@@ -149,6 +149,8 @@ int QuestionMultiMenu::Show(sf::RenderWindow& window, const std::string categori
 		choix.push_back(std::to_string(rand() % nombreQuestionsTotalesParCatégorie + 1));
 
 		while (choix.size() != 5) {
+			(mGame->mNetworkLogic).service();
+
 			int pris = 0;
 			std::string aleatoir = std::to_string(rand() % nombreQuestionsTotalesParCatégorie + 1);
 			for (auto i : choix)
@@ -284,6 +286,7 @@ int QuestionMultiMenu::Show(sf::RenderWindow& window, const std::string categori
 
 		QuestionMultiMenu::QuestionMultiMenuResultRep answer = GetMenuResponse(window);
 		while (answer == Rate) {
+			(mGame->mNetworkLogic).service();
 			answer = GetMenuResponse(window);
 		}
 
@@ -326,7 +329,6 @@ QuestionMultiMenu::QuestionMultiMenuResultRep  QuestionMultiMenu::GetMenuRespons
 		while (window.pollEvent(menuEvent))
 		{
 			(mGame->mNetworkLogic).service();
-
 			if (menuEvent.type == sf::Event::MouseButtonPressed)
 			{
 				return HandleClick(menuEvent.mouseButton.x, menuEvent.mouseButton.y);

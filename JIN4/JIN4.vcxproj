@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="EcranAcceuil.h" />
     <ClInclude Include="FinMenu.h" />
+    <ClInclude Include="FinMultiMenu.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="QuestionMultiMenu.h" />
     <ClInclude Include="UIListener.h" />
@@ -170,6 +171,7 @@
   <ItemGroup>
     <ClCompile Include="EcranAcceuil.cpp" />
     <ClCompile Include="FinMenu.cpp" />
+    <ClCompile Include="FinMultiMenu.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="JIN4.cpp" />
     <ClCompile Include="MainMenu.cpp" />

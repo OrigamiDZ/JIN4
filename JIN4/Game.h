@@ -15,7 +15,7 @@ public:
 	std::vector<std::string> data;
 	std::string subject;
 	NetworkLogic mNetworkLogic;
-
+	int scoreAdversaire;
 
 private:
 	int	mPlayerNumber;

@@ -16,7 +16,8 @@ public:
 	enum MessageType
 	{
 		PlayerChange,
-		ChoixSujet
+		ChoixSujet,
+		ReceptionScore
 	};
 
 	NetworkLogic(const ExitGames::Common::JString& appID, const ExitGames::Common::JString& appVersion, Game *game);
@@ -26,6 +27,8 @@ public:
 	void service(void);
 	void sendPlayerChange(sf::Keyboard::Key key);
 	void sendSubject(int subject);
+	void sendScore(int score);
+
 
 	int getNumber(void);
 	int getRoundTripTime(void) 	const;

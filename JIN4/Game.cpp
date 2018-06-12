@@ -8,6 +8,7 @@
 #include "FinMenu.h"
 #include "windows.h"
 #include <iostream>
+#include "FinMultiMenu.h"
 
 
 static const ExitGames::Common::JString appID = L"774e251d-8a12-444d-88c0-96130444aba0"; // set your app id here
@@ -111,27 +112,21 @@ void Game::ShowMenu()
 		solo = false;
 		mNetworkLogic.service();
 		if (mPlayerNumber == 1) {
-			sf::Texture texture;
-			texture.loadFromFile("c:/Dev/JIN4/JIN4/images/the_muses.png");
-			sf::Sprite sprite(texture);
-			mainMenu.~MainMenu();
-			_mainWindow.draw(sprite);
-			_mainWindow.display();
 			while (!twoPlayers) {
-				Sleep(500);
+				Sleep(1500);
 				mNetworkLogic.service();
 			}
 			std::cout << "Out de la boucle !" << std::endl;
 			ShowSecondMenu();
 		}
 		else {
-			std::cout << "Le player 2 est la";
+			std::cout << "Le player 2 est arrivé";
 			subject = "";
 			while (subject == "") {
-				Sleep(500);
+				Sleep(1500);
 				mNetworkLogic.service();
 			}
-			mainMenu.~MainMenu();
+			std::cout << "Le player 2 est sorti";
 			_gameState = Game::PlayingMulti;
 		}
 		break;
@@ -254,15 +249,42 @@ void Game::ShowQuestionMultiMenu()
 {
 	QuestionMultiMenu questionMultiMenu(this);
 	int score = questionMultiMenu.Show(_mainWindow, subject);
-	FinMenu finMenu;
-	FinMenu::FinMenuResult result = finMenu.Show(_mainWindow, score);
+	if (mPlayerNumber == 1) {
+		mNetworkLogic.sendScore(score);
+	}
+	else {
+		while (scoreAdversaire == 0) {
+			mNetworkLogic.service();
+		}
+	}
+	FinMultiMenu finMultiMenu;
+	FinMultiMenu::FinMultiMenuResult result = finMultiMenu.Show(_mainWindow, score, scoreAdversaire);
 	switch (result)
 	{
 	case FinMenu::Autre:
-		_gameState = Game::ShowingSecondMenu;
+		_gameState = Game::ShowingMenu;
 		break;
 	case FinMenu::Recommencer:
-		ShowQuestionMenu();
+		solo = false;
+		mNetworkLogic.service();
+		if (mPlayerNumber == 1) {
+			while (!twoPlayers) {
+				Sleep(1500);
+				mNetworkLogic.service();
+			}
+			std::cout << "Out de la boucle !" << std::endl;
+			ShowSecondMenu();
+		}
+		else {
+			std::cout << "Le player 2 est arrivé";
+			subject = "";
+			while (subject == "") {
+				Sleep(1500);
+				mNetworkLogic.service();
+			}
+			std::cout << "Le player 2 est sorti";
+			_gameState = Game::PlayingMulti;
+		}
 		break;
 	case FinMenu::Exit:
 		_gameState = Game::Exiting;

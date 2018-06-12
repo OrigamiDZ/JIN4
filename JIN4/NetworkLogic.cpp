@@ -85,6 +85,15 @@ void NetworkLogic::sendSubject(int subject)
 	++mSendCount;
 }
 
+void NetworkLogic::sendScore(int score)
+{
+	nByte eventCode = ReceptionScore; // use distinct event codes to distinguish between different types of events (for example 'move', 'shoot', etc.)
+	ExitGames::Common::Hashtable evData; // organize your payload data in any way you like as long as it is supported by Photons serialization
+	evData.put(static_cast<nByte>(0), score);
+	mLoadBalancingClient.opRaiseEvent(true, evData, eventCode); // true, because it is not acceptable to lose player actions
+	++mSendCount;
+}
+
 int NetworkLogic::getNumber(void)
 {
 	// In photon, First player to connect receives number 1, second receives number 2, etc.
@@ -181,13 +190,13 @@ void NetworkLogic::customEventAction(int playerNr, nByte eventCode, const ExitGa
 	ExitGames::Common::Hashtable eventContent = ExitGames::Common::ValueObject<ExitGames::Common::Hashtable>(eventContentObj).getDataCopy();
 	switch (eventCode)
 	{
-	case PlayerChange:
+	case ReceptionScore:
 		if (!eventContent.getValue((nByte)0)) {
 			mpOutputListener->writeString(L"ERROR : Received incomplete message :-(");
 			exit(1);
 		}
 		else {
-
+			mGame->scoreAdversaire = static_cast<int>(((ExitGames::Common::ValueObject<int>*)(eventContent.getValue((nByte)0)))->getDataCopy());
 		}
 		break;
 	case ChoixSujet:
